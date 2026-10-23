@@ -1,0 +1,15 @@
+[package]
+name = "pps-protocol"
+description = "Protocolo do túnel entre o Parlo Player Server e os apps Parlo"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+iroh.workspace = true
+iroh-tickets.workspace = true
+tokio.workspace = true
+tracing.workspace = true

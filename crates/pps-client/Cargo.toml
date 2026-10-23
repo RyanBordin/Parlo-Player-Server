@@ -1,0 +1,16 @@
+[package]
+name = "pps-client"
+description = "Proxy local de teste: expõe o PPS remoto em 127.0.0.1 para qualquer app Subsonic"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+pps-protocol.workspace = true
+anyhow.workspace = true
+clap.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
