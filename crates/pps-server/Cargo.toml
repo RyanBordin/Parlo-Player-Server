@@ -1,0 +1,21 @@
+[package]
+name = "pps-server"
+description = "Parlo Player Server: ponta do túnel iroh na frente do Navidrome"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "pps"
+path = "src/main.rs"
+
+[dependencies]
+pps-protocol.workspace = true
+anyhow.workspace = true
+clap.workspace = true
+iroh.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true

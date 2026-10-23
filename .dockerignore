@@ -1,0 +1,5 @@
+# Coisas que não precisam ir para dentro do "docker build".
+target
+data
+.git
+.env

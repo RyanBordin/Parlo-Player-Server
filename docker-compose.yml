@@ -1,0 +1,45 @@
+# Sobe o Navidrome e o Parlo Player Server juntos.
+#
+#   docker compose up -d --build     # sobe tudo (e compila o PPS na 1ª vez)
+#   docker compose logs pps          # mostra o ticket do servidor
+#   docker compose down              # para tudo (os dados ficam)
+#
+# Passo a passo e explicação de cada linha em docs/docker.md.
+
+services:
+  navidrome:
+    image: deluan/navidrome:latest
+    restart: unless-stopped
+    ports:
+      # Só a própria máquina (127.0.0.1) acessa a interface web do Navidrome.
+      # Ninguém de fora chega nele; quem vem de fora passa pelo PPS.
+      - "127.0.0.1:4533:4533"
+    environment:
+      ND_LOGLEVEL: info
+    volumes:
+      # Banco de dados, capas em cache etc. (volume gerenciado pelo Docker).
+      - navidrome-data:/data
+      # Sua pasta de músicas, só leitura. Configure MUSIC_DIR no arquivo .env.
+      - ${MUSIC_DIR:-./musica}:/music:ro
+
+  pps:
+    build: .
+    image: parlo-player-server:dev
+    restart: unless-stopped
+    depends_on:
+      - navidrome
+    environment:
+      # "navidrome" é o nome do serviço acima: dentro da rede do compose, os
+      # containers se acham pelo nome.
+      PPS_BACKEND: navidrome:4533
+      PPS_UDP_PORT: 4535
+    ports:
+      # Porta UDP do túnel. Ajuda a conexão direta (sem relay) quando dá;
+      # atrás de CGNAT o relay cobre, sem abrir nada no roteador.
+      - "4535:4535/udp"
+    volumes:
+      - pps-data:/data
+
+volumes:
+  navidrome-data:
+  pps-data:
